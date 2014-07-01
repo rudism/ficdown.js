@@ -1,0 +1,39 @@
+html, body
+  height 100%
+body
+  font-family 'Maven Pro', sans-serif
+  background url('science.png') fixed repeat
+html, body, h1, h2, p, ul, div
+  margin 0
+  padding 0
+ul
+  list-style-type circle
+  margin-left 1.33em
+#container
+  background-color rgba(255,255,255,0.95)
+  max-width 800px
+  margin 0 auto
+  height 100%
+  overflow-y scroll
+  overflow-x hidden
+#main
+  position relative
+  padding 40px 60px
+  p, h1, h2
+    margin 1em 0
+a
+  color #c00
+  text-decoration none
+  &.disabled
+    color #999
+    &.chosen
+      color #000
+      &:hover
+        color #000
+  &:hover
+    text-decoration underline
+    color #f00
+    &.disabled
+      text-decoration none
+      color #999
+      cursor not-allowed

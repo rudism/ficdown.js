@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Ficdown.js Tests</title>
+<meta charset="utf-8">
+</head>
+<body>
+<div>
+  <textarea style="height:200px;width:600px;" id="input"># [Test Story](/test-scene)
+
+This is a test story by Rudis Muiznieks
+
+Version 1
+
+## Test Scene
+
+This is a test scene.scene
+
+- [This is an option.](/test-scene-2)
+- [This is another option.](#test-condition)
+
+### Test Condition
+
+You have [|not](?test-condition) selected that option before.
+
+## [Test Scene](?test-condition "Different Title")
+
+This is the scene that matches a condition.
+
+## Test Scene 2
+
+This is a second scene</textarea>
+  <div><button onclick="doIt()">Do It</button></div>
+  <pre id="output">
+
+  </pre>
+</div>
+<script src="ficdown.js"></script>
+<script>
+function doIt(){
+  var storyText = document.getElementById('input').value;
+  var story = parseText(storyText);
+  document.getElementById('output').innerHTML = JSON.stringify(story,null,2);
+}
+doIt();
+</script>
+</body>
+</html>
