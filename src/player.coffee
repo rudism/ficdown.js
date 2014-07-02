@@ -66,6 +66,7 @@ class Player
     if @container.find('a:not(.disabled):not(.external)').length == 0
       @container.append @converter.makeHtml '## The End\n\nYou have reached the end of this story. <a id="restart" href="">Click here</a> to start over.'
       $('#restart').click ->
+        @container.empty()
         player = new Player @story, @id
         $("##{@id}").data 'player', player
         player.play()
