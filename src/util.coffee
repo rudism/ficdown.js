@@ -10,7 +10,7 @@ regexLib =
 
   escapeChar: /\\(?=[^\\])/g
 
-  emptyListItem: /^\s*-\s*([\r\n]+|$)/gm
+  emptyListItem: /^[ ]*-\s*([\r\n]+|$)/gm
 
 matchAnchor = (text) ->
   re = new RegExp regexLib.anchors

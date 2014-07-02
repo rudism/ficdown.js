@@ -40,14 +40,14 @@ module.exports = (grunt) ->
         files: [
           expand: true
           flatten: true
-          src: ['src/example/*.html', 'src/example/*.png', 'src/example/*.md']
+          src: ['src/example/*.html', 'src/example/*.png', 'src/example/*.md', 'bin/ficdown.min.js']
           dest: 'bin/example/'
         ]
 
     watch:
       js:
         files: ['src/**/*.coffee']
-        tasks: ['build:js']
+        tasks: ['build:js', 'copy:example']
       css:
         files: ['src/**/*.styl']
         tasks: ['stylus:compile']

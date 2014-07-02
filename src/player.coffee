@@ -7,6 +7,8 @@ class Player
     @visitedScenes = {}
     @currentScene = null
     @moveCounter = 0
+    i = 0
+    scene.id = "s#{++i}" for scene in scenes for key, scenes of @story.scenes
 
   play: ->
     @container.html @converter.makeHtml "##{story.name}\n\n#{story.description}\n\n[Click to start...](/#{story.firstScene})"
@@ -50,9 +52,9 @@ class Player
       $this.unbind 'click'
       $this.click -> return false
 
-  processHtml: (scene, html) ->
+  processHtml: (sceneid, html) ->
     temp = $('<div/>').append $.parseHTML html
-    if @visitedScenes[scene]
+    if @visitedScenes[sceneid]
       temp.find('blockquote').remove()
     else
       temp.find('blockquote').each (i) ->
@@ -73,7 +75,6 @@ class Player
     matchedScene = null
     actions = []
     if match?.toggles?
-      console.log "toggles: " + JSON.stringify match.toggles
       toggles = match.toggles.split '+'
       for toggle in toggles
         if @story.actions[toggle]?
@@ -95,14 +96,13 @@ class Player
     newContent = "###{newScene.name}\n\n"
     newContent += "#{action.description}\n\n" for action in actions
     newContent += newScene.description
-    newHtml = @processHtml newScene.key, @converter.makeHtml newContent
-    @visitedScenes[newScene.key] = true
+    newHtml = @processHtml newScene.id, @converter.makeHtml newContent
+    @visitedScenes[newScene.id] = true
     scrollId = "move-#{@moveCounter++}"
     @container.append $('<span/>').attr 'id', scrollId
     @container.append newHtml
     @wireLinks()
     @checkGameOver()
-    console.log "scrolling to #{scrollId}"
     @container.parent('.container').animate
       scrollTop: $("##{scrollId}").offset().top - @container.offset().top
     , 1000

@@ -14,9 +14,13 @@
 <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Sanitizer.min.js"></script>
-<script src="../ficdown.min.js"></script>
+<script src="ficdown.min.js"></script>
 <script>
-  $.get('story.md', function(data){
+  var story = location.search.replace('?', '');
+  if(!story){
+    story = 'story.md';
+  }
+  $.get(story, function(data){
     story = parseText(data);
     player = new Player(story, 'main');
     player.play();
