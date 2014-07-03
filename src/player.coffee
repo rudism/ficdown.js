@@ -30,7 +30,7 @@ class Player
     for anchor in matchAnchors description
       href = matchHref anchor.href
       if href.conditions?
-        conditions = href.conditions.split '&'
+        conditions = toBoolHash href.conditions.split '&'
         satisfied = conditionsMet @playerState, conditions
         alts = splitAltText anchor.text
         replace = if satisfied then alts.passed else alts.failed
@@ -87,7 +87,7 @@ class Player
       if @story.scenes[match.target]?
         for scene in @story.scenes[match.target]
           if conditionsMet @playerState, scene.conditions
-            if !matchedScene? or !scene.conditions? or !matchedScene.conditions? or scene.conditions.length > matchedScene.conditions.length
+            if !matchedScene? or !scene.conditions? or !matchedScene.conditions? or Object.keys(scene.conditions).length > Object.keys(matchedScene.conditions).length
               matchedScene = scene
     if matchedScene?
       @currentScene = matchedScene
