@@ -2,7 +2,7 @@ regexLib =
 
   anchors: /(\[((?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[\])*\])*\])*\])*\])*\])*)\]\([ ]*((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\(\))*\))*\))*\))*\))*\))*)[ ]*((['"])(.*?)\5[ ]*)?\))/gm
 
-  href: /^(?:\/([a-zA-Z](?:-?[a-zA-Z0-9])*))?(?:\?((?:[a-zA-Z](?:-?[a-zA-Z0-9])*)(?:&[a-zA-Z](?:-?[a-zA-Z0-9])*)*)?)?(?:#((?:[a-zA-Z](?:-?[a-zA-Z0-9])*)(?:\+[a-zA-Z](?:-?[a-zA-Z0-9])*)*))?$/
+  href: /^(?:\/([a-zA-Z](?:-?[a-zA-Z0-9])*))?(?:\?((?:!?[a-zA-Z](?:-?[a-zA-Z0-9])*)(?:&!?[a-zA-Z](?:-?[a-zA-Z0-9])*)*)?)?(?:#((?:[a-zA-Z](?:-?[a-zA-Z0-9])*)(?:\+[a-zA-Z](?:-?[a-zA-Z0-9])*)*))?$/
 
   trim: /^\s+|\s+$/g
 
@@ -59,13 +59,23 @@ matchHref = (href) ->
 normalize = (text) ->
   text.toLowerCase().replace(/^\W+|\W+$/g, '').replace /\W+/g, '-'
 
+toBoolHash = (names) ->
+  if !names?
+    return null
+  hash = {}
+  for name in names
+    if name.indexOf('!') == 0
+      hash[name.substring 1, name.length] = false
+    else
+      hash[name] = true
+  return hash
+
 conditionsMet = (state, conditions) ->
   met = true
-  if conditions?
-    for condition in conditions
-      if !state[condition]?
-        met = false
-        break
+  for cond, val of conditions
+    if (val and !state[cond]) or (!val and state[cond])
+      met = false
+      break
   return met
 
 splitAltText = (text) ->

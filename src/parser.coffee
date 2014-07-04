@@ -60,7 +60,7 @@ blockToScene = (block) ->
     key = normalize sceneName.text
     href = matchHref sceneName.href
     if href?.conditions?
-      conditions = href.conditions.split '&'
+      conditions = toBoolHash href.conditions.split '&'
   else
     title = trimText block.name
     key = normalize block.name

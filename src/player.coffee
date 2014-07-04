@@ -30,7 +30,7 @@ class Player
     for anchor in matchAnchors description
       href = matchHref anchor.href
       if href.conditions?
-        conditions = href.conditions.split '&'
+        conditions = toBoolHash href.conditions.split '&'
         satisfied = conditionsMet @playerState, conditions
         alts = splitAltText anchor.text
         replace = if satisfied then alts.passed else alts.failed
@@ -65,11 +65,13 @@ class Player
   checkGameOver: ->
     if @container.find('a:not(.disabled):not(.external)').length == 0
       @container.append @converter.makeHtml '## The End\n\nYou have reached the end of this story. <a id="restart" href="">Click here</a> to start over.'
-      $('#restart').click ->
-        @container.empty()
-        player = new Player @story, @id
-        $("##{@id}").data 'player', player
+      $('#restart').data('info', [@id, @story]).click ->
+        info = $(this).data 'info'
+        $("##{info[0]}").empty()
+        player = new Player info[1], info[0]
+        $("##{info[0]}").data 'player', player
         player.play()
+        return false
 
   handleHref: (href) ->
     match = matchHref href
@@ -87,7 +89,7 @@ class Player
       if @story.scenes[match.target]?
         for scene in @story.scenes[match.target]
           if conditionsMet @playerState, scene.conditions
-            if !matchedScene? or !scene.conditions? or !matchedScene.conditions? or scene.conditions.length > matchedScene.conditions.length
+            if !matchedScene? or !scene.conditions? or !matchedScene.conditions? or Object.keys(scene.conditions).length > Object.keys(matchedScene.conditions).length
               matchedScene = scene
     if matchedScene?
       @currentScene = matchedScene
