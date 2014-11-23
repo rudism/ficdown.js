@@ -11,7 +11,7 @@ class Player
     scene.id = "s#{++i}" for scene in scenes for key, scenes of @story.scenes
 
   play: ->
-    @container.html @converter.makeHtml "##{story.name}\n\n#{story.description}\n\n[Click to start...](/#{story.firstScene})"
+    @container.html @converter.makeHtml "##{@story.name}\n\n#{@story.description}\n\n[Click to start...](/#{@story.firstScene})"
     @wireLinks()
 
   wireLinks: ->
