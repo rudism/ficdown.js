@@ -65,7 +65,7 @@ blockToScene = (block) ->
     title = trimText block.name
     key = normalize block.name
   scene =
-    name: title
+    name: if title != '' then title else null
     key: key
     description: trimText block.lines.join "\n"
     conditions: if conditions? then conditions else null

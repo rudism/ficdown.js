@@ -18,6 +18,7 @@ This is a test scene.scene
 
 - [This is an option.](/test-scene-2)
 - [This is another option.](#test-condition)
+- [Another scene.](/test-scene-3)
 
 ### Test Condition
 
@@ -29,7 +30,11 @@ This is the scene that matches a condition.
 
 ## Test Scene 2
 
-This is a second scene</textarea>
+This is a second scene
+
+## [Test Scene 3]("")
+
+This scene has no title.</textarea>
   <div><button onclick="doIt()">Do It</button></div>
   <pre id="output">
 
@@ -37,12 +42,11 @@ This is a second scene</textarea>
 </div>
 <script src="ficdown.js"></script>
 <script>
-function doIt(){
+(function doIt(){
   var storyText = document.getElementById('input').value;
   var story = parseText(storyText);
   document.getElementById('output').innerHTML = JSON.stringify(story,null,2);
-}
-doIt();
+})()
 </script>
 </body>
 </html>

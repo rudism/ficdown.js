@@ -1,6 +1,6 @@
 {
   "name": "ficdown.js",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A parser and player for Interactive Fiction written in Ficdown",
   "dependencies": {},
   "devDependencies": {

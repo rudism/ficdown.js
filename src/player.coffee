@@ -96,7 +96,8 @@ class Player
     newScene = $.extend {}, @currentScene
     newScene.description = @resolveDescription newScene.description
     @disableOldLinks()
-    newContent = "###{newScene.name}\n\n"
+    newContent = ""
+    newContent += "###{newScene.name}\n\n" if newScene.name?
     newContent += "#{action.description}\n\n" for action in actions
     newContent += newScene.description
     newHtml = @processHtml newScene.id, @converter.makeHtml newContent
