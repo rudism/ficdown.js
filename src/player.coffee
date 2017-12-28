@@ -1,5 +1,10 @@
 class Player
-  constructor: (@story, @id) ->
+  constructor: (
+    @story,
+    @id,
+    @startText = "Click to start...",
+    @endText = '## The End\n\nYou have reached the end of this story. <a id="restart" href="">Click here</a> to start over.'
+  ) ->
     @converter = new Markdown.Converter()
     @container = $("##{@id}")
     @container.addClass('ficdown').data 'player', this
@@ -11,7 +16,7 @@ class Player
     scene.id = "s#{++i}" for scene in scenes for key, scenes of @story.scenes
 
   play: ->
-    @container.html @converter.makeHtml "##{@story.name}\n\n#{@story.description}\n\n[Click to start...](/#{@story.firstScene})"
+    @container.html @converter.makeHtml "##{@story.name}\n\n#{@story.description}\n\n[#{@startText}](/#{@story.firstScene})"
     @wireLinks()
 
   wireLinks: ->
@@ -64,7 +69,7 @@ class Player
 
   checkGameOver: ->
     if @container.find('a:not(.disabled):not(.external)').length == 0
-      @container.append @converter.makeHtml '## The End\n\nYou have reached the end of this story. <a id="restart" href="">Click here</a> to start over.'
+      @container.append @converter.makeHtml @endText
       $('#restart').data('info', [@id, @story]).click ->
         info = $(this).data 'info'
         $("##{info[0]}").empty()
