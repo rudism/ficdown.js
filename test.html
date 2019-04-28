@@ -1,3 +1,22 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <title>Ficdown.js Test</title>
+    <style>
+      a.disabled {
+        color: #999;
+      }
+      a.disabled.chosen {
+        color: #000;
+      }
+      a.disabled:hover {
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id='source' style='display: none;'>
 # [Cloak of Darkness](/foyer)
 
 A basic IF demonstration.
@@ -59,3 +78,16 @@ The message, neatly marked in the sawdust, reads...
 The message has been carelessly trampled, making it difficult to read. You can just distinguish the words...
 
 **You have lost.**
+    </textarea>
+    <div id='game' />
+    <script src='build/ficdown.min.js'></script>
+    <script>
+      var player = new Ficdown({
+        id: 'game',
+        source: document.getElementById('source').value,
+        scroll: true,
+      });
+      player.play();
+    </script>
+  </body>
+</html>

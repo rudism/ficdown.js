@@ -4,45 +4,39 @@ Ficdown is a system for building interactive fiction using MarkDown syntax, and 
 
 ## Dependencies
 
-Ficdown.js uses [jQuery](http://jquery.com) for DOM manipulation and [PageDown](https://code.google.com/p/pagedown/) to convert MarkDown into HTML.
+The generated ficdown.js and ficdown.min.js include all dependencies ([JQuery](https://jquery.com) and [markdown-it](https://github.com/markdown-it/markdown-it)), so no additional scripts are required to play games.
+
+## Bulding
+
+You can compile, pack, and minify with these commands:
+
+```
+> npm install
+> npm run build
+> npm run pack
+> npm run minify
+```
+
+You can combine all three `build`, `pack`, and `minify` steps with this command:
+
+```
+> npm run make
+```
 
 ## Usage
 
-You can obtain *ficdown.js* or *ficdown.min.js* from the latest version on the [releases](https://github.com/rudism/Ficdown.js/releases) page. Assuming you've uploaded it to your web server along with a Ficdown story file named *story.md*, your HTML document would look something like this:
+You can obtain *ficdown.js* or *ficdown.min.js* from the latest version on the [releases](https://github.com/rudism/Ficdown.js/releases) page. See the example [test.html](https://github.com/rudism/Ficdown.js/blob/master/test.html) file for basic usage and styling. The example includes the story content in a hidden text area so it can run locally in a browser.
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>My Ficdown Story</title>
-  </head>
-  <body>
-    <!-- This container will be used by Ficdown.js to present the story -->
-    <div id="main"></div>
-
-    <!-- include Ficdown.js dependencies from CDNs -->
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Sanitizer.min.js"></script>
-
-    <!-- include locally hosted Ficdown.js -->
-    <script src="ficdown.min.js"></script>
-
-    <script>
-      // retrieve the Ficdown source file story.md via ajax
-      $.get('story.md', function(data){
-
-        // after retrieving the file, parse it
-        story = parseText(data);
-
-        // after parsing the story, load it into the div with id='main'
-        player = new Player(story, 'main');
-        player.play();
-
-      }, 'text');
-    </script>
-  </body>
-</html>
+```javascript
+var player = new Ficdown(playerOptions);
+player.play();
 ```
 
-You will probably want to do some styling to make the story look better. For an example stylesheet, see the example included in the Ficdown.js repository at [/src/example/player.styl](/src/example/player.styl).
+Your `playerOptions` should be an object with the following properties:
+
+- `source`: Your story's ficdown code. Either store it right in the html document, or make an XHR to pull the story content in from an external file, and put its content here.
+- `id`: The id of a div on the page to inject the game into. For example if your html is `<div id='game'/>` then you would pass `game` here.
+- `scroll` (optional): Set this to `true` if you want the player's full game history to remain on the screen and automatically scroll the page down whenever a new scene is added to the bottom. By default each scene will replace the previous one and the page will be scrolled to the top.
+- `html` (optional): Set this to true if your ficdown file contains raw html that you want rendered. By default html will not be rendered.
+- `startText` (optional): Set this to override the link text that begins the game.
+- `endMarkdown` (optional): Set this to override the "game over" content that is displayed when the player reaches a scene with no more links to follow. Include an anchor with the href set to `restart()` if you want a link that will start the story over from the beginning.
