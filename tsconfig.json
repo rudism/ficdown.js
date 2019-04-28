@@ -1,14 +1,12 @@
 {
    "compilerOptions": {
-      "lib": [ "es2017" ],
-      "target": "es6",
+      "target": "es5",
+      "lib": ["es2017", "dom"],
       "module": "commonjs",
       "moduleResolution": "node",
-      "outDir": "./build",
-      "declaration": true,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "strict": true,
-      "sourceMap": true
+      "baseUrl": "./src",
+      "outDir": "./build/unpacked",
+      "allowJs": true,
+      "strict": true
    }
 }

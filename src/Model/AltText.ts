@@ -1,4 +1,4 @@
 export type AltText = {
-  passed: string,
-  failed: string,
+  passed?: string,
+  failed?: string,
 }

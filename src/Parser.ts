@@ -58,7 +58,7 @@ export class Parser {
 
     const story: Story = {
       name: storyName.text,
-      description: Util.trimText(storyBlock.lines.join("\n")),
+      description: Util.trimText(storyBlock.lines.map(l => l.text).join("\n")),
       firstScene: storyHref.target,
       scenes: {},
       actions: {},
@@ -102,7 +102,7 @@ export class Parser {
       name,
       key,
       conditions,
-      description: Util.trimText(block.lines.join("\n")),
+      description: Util.trimText(block.lines.map(l => l.text).join("\n")),
       lineNumber: block.lineNumber,
     };
   }
@@ -110,7 +110,7 @@ export class Parser {
   private static blockToAction(block: Block): Action {
     return {
       state: Util.normalize(block.name),
-      description: Util.trimText(block.lines.join("\n")),
+      description: Util.trimText(block.lines.map(l => l.text).join("\n")),
       lineNumber: block.lineNumber,
     };
   }

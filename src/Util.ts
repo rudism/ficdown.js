@@ -1,18 +1,18 @@
 import { Anchor, Href, BoolHash, AltText } from './Model';
 
 export class Util {
-  private static regexLib: { [name: string]: RegExp } = {
-    anchors: /(\[((?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[\])*\])*\])*\])*\])*\])*)\]\([ ]*((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\(\))*\))*\))*\))*\))*\))*)[ ]*((['"])(.*?)\5[ ]*)?\))/gm,
+  public static regexLib: { [name: string]: () => RegExp } = {
+    anchors: () => /(\[((?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[(?:[^\[\]]+|\[\])*\])*\])*\])*\])*\])*)\]\([ ]*((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\((?:[^()\s]+|\(\))*\))*\))*\))*\))*\))*)[ ]*((['"])(.*?)\5[ ]*)?\))/gm,
 
-    href: /^(?:\/([a-zA-Z](?:-?[a-zA-Z0-9])*))?(?:\?((?:!?[a-zA-Z](?:-?[a-zA-Z0-9])*)(?:&!?[a-zA-Z](?:-?[a-zA-Z0-9])*)*)?)?(?:#((?:[a-zA-Z](?:-?[a-zA-Z0-9])*)(?:\+[a-zA-Z](?:-?[a-zA-Z0-9])*)*))?$/,
+    href: () => /^(?:\/([a-zA-Z](?:-?[a-zA-Z0-9])*))?(?:\?((?:!?[a-zA-Z](?:-?[a-zA-Z0-9])*)(?:&!?[a-zA-Z](?:-?[a-zA-Z0-9])*)*)?)?(?:#((?:[a-zA-Z](?:-?[a-zA-Z0-9])*)(?:\+[a-zA-Z](?:-?[a-zA-Z0-9])*)*))?$/,
 
-    trim: /^\s+|\s+$/g,
+    trim: () => /^\s+|\s+$/g,
 
-    altText: /^((?:[^|\\]|\\.)*)(?:\|((?:[^|\\]|\\.)+))?$/,
+    altText: () => /^((?:[^|\\]|\\.)*)(?:\|((?:[^|\\]|\\.)+))?$/,
 
-    escapeChar: /\\(?=[^\\])/g,
+    escapeChar: () => /\\(?=[^\\])/g,
 
-    emptyListItem: /^[ ]*-\s*([\r\n]+|$)/gm,
+    emptyListItem: () => /^[ ]*-\s*([\r\n]+|$)/gm,
   };
 
   private static matchToAnchor(match: RegExpExecArray): Anchor {
@@ -30,21 +30,22 @@ export class Util {
   }
 
   public static matchAnchor(text: string): Anchor | undefined {
-    const match = this.regexLib.anchors.exec(text);
+    const match = this.regexLib.anchors().exec(text);
     if(match) return this.matchToAnchor(match);
   }
 
   public static matchAnchors(text: string): Anchor[] {
     let match: RegExpExecArray | null;
     const anchors: Anchor[] = [];
-    while(match = this.regexLib.anchors.exec(text)) {
+    const regex = this.regexLib.anchors();
+    while((match = regex.exec(text)) !== null) {
       anchors.push(this.matchToAnchor(match));
     }
     return anchors;
   }
 
   public static matchHref(text: string): Href | undefined {
-    const match = this.regexLib.href.exec(text);
+    const match = this.regexLib.href().exec(text);
     if(match) {
       return {
         target: match[1],
@@ -55,7 +56,7 @@ export class Util {
   }
 
   public static trimText(text: string): string {
-    return text.replace(this.regexLib.trim, '');
+    return text.replace(this.regexLib.trim(), '');
   }
 
   public static normalize(text: string): string {
@@ -76,7 +77,8 @@ export class Util {
     }
   }
 
-  public static conditionsMet(state: BoolHash, conditions: BoolHash): boolean {
+  public static conditionsMet(state: BoolHash, conditions?: BoolHash): boolean {
+    if(!conditions) return true;
     for(let [cond, val] of Object.entries(conditions)) {
       if((val && !state[cond]) || (!val && state[cond])) {
         return false;
@@ -85,13 +87,14 @@ export class Util {
     return true;
   }
 
-  public static splitAltText(text: string): AltText | undefined {
-    const match = this.regexLib.altText.exec(text);
+  public static splitAltText(text: string): AltText {
+    const match = this.regexLib.altText().exec(text);
     if(match) {
       return {
-        passed: match[0],
-        failed: match[1],
+        passed: match[1],
+        failed: match[2],
       };
     }
+    return {};
   }
 }
