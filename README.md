@@ -4,7 +4,7 @@ Ficdown is a system for building interactive fiction using MarkDown syntax, and 
 
 ## Dependencies
 
-The generated ficdown.js and ficdown.min.js include all dependencies ([JQuery](https://jquery.com) and [markdown-it](https://github.com/markdown-it/markdown-it)), so no additional scripts are required to play games.
+The generated ficdown.js and ficdown.min.js include all dependencies ([JQuery](https://jquery.com), [markdown-it](https://github.com/markdown-it/markdown-it), and [core-js](https://github.com/zloirock/core-js)), so no additional scripts are required to play games.
 
 ## Bulding
 
