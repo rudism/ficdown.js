@@ -9,17 +9,17 @@
     "make": "npm run build && npm run pack && npm run minify"
   },
   "dependencies": {
-    "core-js": "^3.0.1",
-    "jquery": "^3.4.0",
-    "markdown-it": "^8.4.2"
+    "core-js": "^3.6.5",
+    "jquery": "^3.5.1",
+    "markdown-it": "^10.0.0"
   },
   "devDependencies": {
-    "@types/core-js": "^2.5.0",
-    "@types/jquery": "^3.3.29",
-    "@types/markdown-it": "0.0.7",
-    "@types/node": "^11.13.8",
-    "browserify": "^16.2.3",
-    "typescript": "^3.4.5",
-    "uglify-js": "^3.5.9"
+    "@types/core-js": "^2.5.3",
+    "@types/jquery": "^3.3.38",
+    "@types/markdown-it": "^10.0.1",
+    "@types/node": "^13.13.5",
+    "browserify": "^16.5.1",
+    "typescript": "^3.8.3",
+    "uglify-js": "^3.9.2"
   }
 }
