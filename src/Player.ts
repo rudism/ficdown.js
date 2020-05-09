@@ -42,7 +42,7 @@ export class Player {
 
   public play(): void {
     this.container.html(
-      this.converter.render(`# ${ this.story.name }\n\n${ this.story.description }\n\n[${ this.startText }](/${ this.story.firstScene })`));
+      this.converter.render(`${ this.story.name ? `# ${this.story.name}\n\n` : '' }${ this.story.description }\n\n[${ this.startText }](/${ this.story.firstScene })`));
     this.wireLinks();
   }
 
@@ -65,10 +65,11 @@ export class Player {
       if(this.story.scenes[match.target]) {
         for(let scene of this.story.scenes[match.target]) {
           if(Util.conditionsMet(this.playerState, scene.conditions)) {
-            if(!matchedScene
-              || !scene.conditions
-              || !matchedScene.conditions
-              || Object.keys(scene.conditions).length > Object.keys(matchedScene.conditions).length) {
+            const sceneConds = scene.conditions
+              ? Object.keys(scene.conditions).length : 0;
+            const matchConds = matchedScene && matchedScene.conditions
+              ? Object.keys(matchedScene.conditions).length : 0;
+            if(!matchedScene || sceneConds > matchConds) {
               matchedScene = scene;
             }
           }

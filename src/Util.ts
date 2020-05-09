@@ -16,13 +16,13 @@ export class Util {
   };
 
   private static matchToAnchor(match: RegExpExecArray): Anchor {
-    const result: Anchor = {
+    const result = {
       anchor: match[1],
       text: match[2],
       href: match[3],
       title: match[6],
     };
-    if(result.href.indexOf('"') === 0) {
+    if(result.href.indexOf('"') === 0 || result.href.indexOf("'") === 0) {
       result.title = result.href.substring(1, result.href.length - 1);
       result.href = '';
     }

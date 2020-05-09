@@ -57,7 +57,7 @@ export class Parser {
     if(!storyHref) throw new ParseError('no link to first scene', storyBlock.lineNumber);
 
     const story: Story = {
-      name: storyName.text,
+      name: storyName.title != null ? storyName.title : storyName.text,
       description: Util.trimText(storyBlock.lines.map(l => l.text).join("\n")),
       firstScene: storyHref.target,
       scenes: {},
@@ -87,7 +87,7 @@ export class Parser {
     let key: string;
     let conditions: BoolHash | undefined = undefined;
     if(sceneName) {
-      name = sceneName.title
+      name = sceneName.title != null
         ? Util.trimText(sceneName.title)
         : Util.trimText(sceneName.text);
       key = Util.normalize(sceneName.text);

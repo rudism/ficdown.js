@@ -1,6 +1,6 @@
 {
   "name": "ficdown.js",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A parser and player for Interactive Fiction written in Ficdown",
   "scripts": {
     "build": "rm -rf ./build && tsc",
