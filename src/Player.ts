@@ -21,6 +21,10 @@ export class Player {
   private startText: string;
   private endMarkdown: string;
 
+  private startCallback?: () => void;
+  private finishCallback?: () => void;
+  private started: boolean = false;
+
   constructor(private options: PlayerOptions) {
     this.converter = new Markdown({
       html: options.html,
@@ -38,6 +42,9 @@ export class Player {
     }
     this.container = $(`#${ options.id }`);
     this.container.addClass('ficdown').data('player', this);
+
+    this.startCallback = options.start;
+    this.finishCallback = options.finish;
   }
 
   public play(): void {
@@ -47,6 +54,10 @@ export class Player {
   }
 
   public handleHref(href: string): false {
+    if (this.startCallback && !this.started) {
+      this.started = true;
+      this.startCallback();
+    }
     const match = Util.matchHref(href);
     let matchedScene: Scene | undefined = undefined;
     const actions: Action[] = [];
@@ -182,6 +193,9 @@ export class Player {
         player.play();
         return false;
       });
+      if (this.finishCallback) {
+        this.finishCallback();
+      }
     }
   }
 }

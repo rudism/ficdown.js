@@ -40,3 +40,5 @@ Your `playerOptions` should be an object with the following properties:
 - `html` (optional): Set this to true if your ficdown file contains raw html that you want rendered. By default html will not be rendered.
 - `startText` (optional): Set this to override the link text that begins the game.
 - `endMarkdown` (optional): Set this to override the "game over" content that is displayed when the player reaches a scene with no more links to follow. Include an anchor with the href set to `restart()` if you want a link that will start the story over from the beginning.
+- `start` (optional): Javascript callback function to execute when the user clicks the first link to begin the story.
+- `finish` (optional): Javascript callback function to execute when the story has finished.
