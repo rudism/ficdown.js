@@ -37,6 +37,7 @@ Your `playerOptions` should be an object with the following properties:
 - `source`: Your story's ficdown code. Either store it right in the html document, or make an XHR to pull the story content in from an external file, and put its content here.
 - `id`: The id of a div on the page to inject the game into. For example if your html is `<div id='game'/>` then you would pass `game` here.
 - `scroll` (optional): Set this to `true` if you want the player's full game history to remain on the screen and automatically scroll the page down whenever a new scene is added to the bottom. By default each scene will replace the previous one and the page will be scrolled to the top.
+- `scrollParent` (optional): The container to scroll. Used even if `scroll=false` to reset the page position to the top whenever a new scene is displayed. Defaults to the document or `body` element of the page.
 - `html` (optional): Set this to true if your ficdown file contains raw html that you want rendered. By default html will not be rendered.
 - `startText` (optional): Set this to override the link text that begins the game.
 - `endMarkdown` (optional): Set this to override the "game over" content that is displayed when the player reaches a scene with no more links to follow. Include an anchor with the href set to `restart()` if you want a link that will start the story over from the beginning.

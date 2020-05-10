@@ -104,12 +104,19 @@ export class Player {
       const scrollId = `move-${ this.moveCounter++ }`;
       this.container.append($('<span/>').attr('id', scrollId));
       this.container.append(newHtml);
-      $([document.documentElement, document.body]).animate({
+      const scrollParent = this.options.scrollParent
+        ? $(`#${ this.options.scrollParent }`)
+        : $([document.documentElement, document.body]);
+      scrollParent.animate({
         scrollTop: $(`#${ scrollId }`).offset()!.top,
       }, 1000);
     } else {
       this.container.html(newHtml);
-      window.scrollTo(0, 0);
+      if (this.options.scrollParent) {
+        $(`#${ this.options.scrollParent }`)[0].scrollTop = 0;
+      } else {
+        window.scrollTo(0, 0);
+      }
     }
     this.wireLinks();
     this.checkGameOver();
