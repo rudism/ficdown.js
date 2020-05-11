@@ -2,6 +2,7 @@
   "name": "ficdown.js",
   "version": "2.0.4",
   "description": "A parser and player for Interactive Fiction written in Ficdown",
+  "license": "MIT",
   "scripts": {
     "build": "rm -rf ./build && tsc",
     "pack": "browserify build/unpacked/main.js --standalone Ficdown > ./build/ficdown.js",
