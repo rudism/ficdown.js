@@ -1,3 +1,5 @@
+**Note:** Active development of Ficdown.js has moved to https://code.sitosis.com/rudism/ficdown.js
+
 # Ficdown.js
 
 Ficdown is a system for building interactive fiction using MarkDown syntax, and Ficdown.js is a Javascript library for presenting Ficdown stories interactively in a web browser. See [Ficdown.com](http://www.ficdown.com/) for more information.
